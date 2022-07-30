@@ -53,7 +53,7 @@ for x in range(56):
     response = get_page(x + 1)
     parse = response.json()
     for y in range(len(parse["items"])):
-        url = "https://pizzaboxer.xyz/asset?id=" + str(parse["items"][y]["PlaceID"])
+        url = "https://polygondev.pizzaboxer.xyz/asset?id=" + str(parse["items"][y]["PlaceID"])
         download = requests.get(url)
         print("downloading " + str(parse["items"][y]["Name"]+".rbxl") + " Place ID: " + str(parse["items"][y]["PlaceID"]))
         place_name = str(parse["items"][y]["Name"])
