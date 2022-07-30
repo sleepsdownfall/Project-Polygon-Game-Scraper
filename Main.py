@@ -47,6 +47,8 @@ def get_page(page):
     }
     return requests.post('https://polygon.pizzaboxer.xyz/api/games/fetch', cookies=cookies, headers=headers, data=data) 
 
+invalid_characters = {"/", "\\", ":", "*", "?", "\"", "<", ">", "|"}
+
 for x in range(56):
     response = get_page(x + 1)
     parse = response.json()
@@ -54,4 +56,7 @@ for x in range(56):
         url = "https://pizzaboxer.xyz/asset?id=" + str(parse["items"][y]["PlaceID"])
         download = requests.get(url)
         print("downloading " + str(parse["items"][y]["Name"]+".rbxl") + " Place ID: " + str(parse["items"][y]["PlaceID"]))
-        open(str(parse["items"][y]["Name"]+".rbxl"), "wb").write(download.content)
+        place_name = str(parse["items"][y]["Name"])
+        for character in invalid_characters:
+            place_name = place_name.replace(character, "")
+        open(place_name+".rbxl", "wb").write(download.content)
